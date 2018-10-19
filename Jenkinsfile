@@ -1,13 +1,4 @@
-pipeline{
-
-    agent{
-      node {
-      label 'master'
-         }
-        }
-
-     stages {
-
+node{
           stage ('checkout'){
                  checkout scm
                   }				  
@@ -31,7 +22,4 @@ pipeline{
                                 sh 'echo "Ended..!"' 
                              }
                       }
-
-             }
-
 }
