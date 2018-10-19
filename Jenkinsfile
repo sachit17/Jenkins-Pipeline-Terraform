@@ -3,7 +3,7 @@ node {
         checkout scm
 
     stage name: 'plan', concurrency: 1
-        sh "terraform plan --out plan"
+        sh "terraform plan"
 
    stage name: 'deploy', concurrency: 1
         def deploy_validation = input(
