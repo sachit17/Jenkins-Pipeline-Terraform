@@ -3,7 +3,7 @@ node {
         checkout scm
 
     stage name: 'plan', concurrency: 1
-        sh " sudo terraform plan --out plan"
+        sh "terraform plan --out plan"
 
    stage name: 'deploy', concurrency: 1
         def deploy_validation = input(
@@ -11,5 +11,5 @@ node {
             message: 'Let\'s continue the deploy plan',
             type: "boolean")
 
-        sh "sudo terraform apply plan"
+        sh "terraform apply plan"
 }
