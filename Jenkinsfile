@@ -1,15 +1,37 @@
-node {
-   stage 'checkout'
-        checkout scm
+pipeline{
 
-    stage name: 'plan', concurrency: 1
-        sh "terraform plan"
+    agent{
+      node {
+      label 'master'
+         }
+        }
 
-   stage name: 'deploy', concurrency: 1
-        def deploy_validation = input(
-            id: 'Deploy',
-            message: 'Let\'s continue the deploy plan',
-            type: "boolean")
+     stages {
 
-        sh "terraform apply plan"
+          stage ('checkout'){
+                 checkout scm
+                  }				  
+          stage('terraform started'){
+              steps {
+                  sh 'echo "started...!"  '
+              }
+           }         
+          stage('terraform init') {
+              steps{ 
+                  sh 'sudo terraform init ./jenkins'
+                   }
+              }
+          stage('terraform plan') {
+                  steps {
+                       sh 'ls ./jenkins; sudo terraform plan ./jenkins' 
+                        }
+                }         
+          stage('terraform ended') {
+                          steps{
+                                sh 'echo "Ended..!"' 
+                             }
+                      }
+
+             }
+
 }
